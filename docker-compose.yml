@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  db:
+    image: mongo:6-jammy
+    container_name: mern_mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    restart: always
+
+  backend:
+    build: ./server
+    container_name: mern_backend
+    ports:
+      - "${PORT:-6001}:${PORT:-6001}"
+    environment:
+      - MONGO_URI=mongodb://db:27017/FlightBookingMERN
+      - PORT=${PORT:-6001}
+    depends_on:
+      - db
+    restart: always
+
+  frontend:
+    build: 
+      context: ./client
+      args:
+        - REACT_APP_API_URL=${REACT_APP_API_URL:-http://localhost:6001}
+    container_name: mern_frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    restart: always
+
+volumes:
+  mongo-data:
