@@ -1,7 +1,9 @@
 import mongoose from 'mongoose';
 import { Flight } from './schemas.js';
 
-mongoose.connect('mongodb://localhost:27017/FlightBookingMERN', { 
+const mongoURI = process.env.MONGO_URI || 'mongodb://db:27017/FlightBookingMERN';
+
+mongoose.connect(mongoURI, { 
     useNewUrlParser: true,
     useUnifiedTopology: true,
 }).then(async () => {
