@@ -21,8 +21,10 @@ mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/FlightBooki
         useUnifiedTopology: true,
     }
 ).then(()=>{
+    console.log("Connected to MongoDB");
+}).catch((e)=> console.log(`Error in db connection ${e}`));
 
-    // All the client-server activites
+// All the client-server activites
 
 
     app.post('/register', async (req, res) => {
@@ -273,8 +275,6 @@ mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/FlightBooki
 
 
 
-        app.listen(PORT, ()=>{
-            console.log(`Running @ ${PORT}`);
-        });
-    }
-).catch((e)=> console.log(`Error in db connection ${e}`));
+    app.listen(PORT, ()=>{
+        console.log(`Running @ ${PORT}`);
+    });

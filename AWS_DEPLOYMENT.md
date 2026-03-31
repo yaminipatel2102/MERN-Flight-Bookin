@@ -55,7 +55,7 @@ B. **Secure Copy (SCP)**: (Only if you have a `.pem` key pair) From your local m
 scp -i "your-key-pair.pem" -r ./Flight-Booking-APP--MERN-Stack ubuntu@<YOUR-EC2-PUBLIC-IP>:/home/ubuntu/
 ```
 
-## 5. Configure Environment Variables
+## 5. Configure Environment Variables (V.V. IMPORTANT)
 Inside your project folder on the EC2 server, create or edit the `.env` file:
 ```bash
 cd /home/ubuntu/Flight-Booking-APP--MERN-Stack
@@ -66,11 +66,16 @@ cp .env.example .env
 # Edit the file using nano
 nano .env
 ```
-Update `REACT_APP_API_URL` to your EC2 public IP. It should look like this:
+
+> **STOP & READ CAREFULLY:**
+> You **must** change `REACT_APP_API_URL` to the *Public IPv4 address* of your EC2 instance. 
+> Do NOT leave it as `localhost`. If you leave it as localhost, your deployed app's frontend will crash and not connect to the database.
+
+Update `REACT_APP_API_URL` to your EC2 public IP. It should look like this (replace `13.123.45.67` with your actual EC2 IP):
 ```env
 PORT=6001
 MONGO_URI=mongodb://db:27017/FlightBookingMERN
-REACT_APP_API_URL=http://<YOUR-EC2-PUBLIC-IP>:6001
+REACT_APP_API_URL=http://13.123.45.67:6001
 ```
 Save and exit (`Ctrl+O`, `Enter`, `Ctrl+X`).
 
